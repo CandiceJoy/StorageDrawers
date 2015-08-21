@@ -1,12 +1,16 @@
 package com.jaquadro.minecraft.storagedrawers.config;
 
+import com.jaquadro.minecraft.storagedrawers.StorageDrawers;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.Level;
 
 public class CompTierRegistry
 {
@@ -25,10 +29,36 @@ public class CompTierRegistry
         register(new ItemStack(Blocks.brick_block), new ItemStack(Items.brick), 4);
         register(new ItemStack(Blocks.nether_brick), new ItemStack(Items.netherbrick), 4);
         register(new ItemStack(Blocks.quartz_block), new ItemStack(Items.quartz), 4);
-        register(new ItemStack(Blocks.melon_block), new ItemStack(Items.melon), 9);
+        register( new ItemStack( Blocks.melon_block ), new ItemStack( Items.melon ), 9 );
 
         if (!Loader.isModLoaded("ExtraUtilities"))
             register(new ItemStack(Blocks.sandstone), new ItemStack(Blocks.sand), 4);
+    }
+
+    public void registerProjectRedSpecialCasesPostInit()
+    {
+        /* Begin Candice Added */
+        if( Loader.isModLoaded( "ProjRed|Core" ) )
+        {
+            for( ItemStack stack : OreDictionary.getOres( "ingotCopper" ) )
+            {
+                if( stack.getUnlocalizedName().equals( "item.projectred.core.part.copper_ingot" ) )
+                    register( stack, OreDictionary.getOres( "nuggetCopper" ).get( 0 ), 9 );
+            }
+
+            for( ItemStack stack : OreDictionary.getOres( "ingotSilver" ) )
+            {
+                if( stack.getUnlocalizedName().equals( "item.projectred.core.part.silver_ingot" ) )
+                    register( stack, OreDictionary.getOres( "nuggetSilver" ).get( 0 ), 9 );
+            }
+
+            for( ItemStack stack : OreDictionary.getOres( "ingotTin" ) )
+            {
+                if( stack.getUnlocalizedName().equals( "item.projectred.core.part.tin_ingot" ) )
+                    register( stack, OreDictionary.getOres( "nuggetTin" ).get( 0 ), 9 );
+            }
+        }
+        /* End Candice Added */
     }
 
     public boolean register (ItemStack upper, ItemStack lower, int convRate) {

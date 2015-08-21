@@ -21,7 +21,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
 
-@Mod(modid = StorageDrawers.MOD_ID, name = StorageDrawers.MOD_NAME, version = StorageDrawers.MOD_VERSION, dependencies = "after:waila;", guiFactory = StorageDrawers.SOURCE_PATH + "core.ModGuiFactory")
+@Mod(modid = StorageDrawers.MOD_ID, name = StorageDrawers.MOD_NAME, version = StorageDrawers.MOD_VERSION, dependencies = "after:waila;after:ProjRed|Core;", guiFactory = StorageDrawers.SOURCE_PATH + "core.ModGuiFactory")
 public class StorageDrawers
 {
     public static final String MOD_ID = "StorageDrawers";
@@ -88,6 +88,7 @@ public class StorageDrawers
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
         recipes.init();
+        compRegistry.registerProjectRedSpecialCasesPostInit();
 
         IntegrationRegistry.instance().postInit();
     }
